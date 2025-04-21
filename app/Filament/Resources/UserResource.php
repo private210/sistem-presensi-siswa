@@ -35,13 +35,11 @@ class UserResource extends Resource
                     ->dehydrateStateUsing(fn($state) => Hash::make($state))
                     ->dehydrated(fn($state) => filled($state))
                     ->required(fn(string $context): bool => $context === 'create'),
-                Forms\Components\Select::make('role')
-                    ->options([
-                        'admin' => 'Admin',
-                        'wali_kelas' => 'Wali Kelas',
-                        'kepala_sekolah' => 'Kepala Sekolah',
-                        'wali_murid' => 'Wali Murid',
-                    ])
+                Forms\Components\Select::make('roles')
+                    ->relationship('roles', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->searchable()
                     ->required(),
             ]);
     }
