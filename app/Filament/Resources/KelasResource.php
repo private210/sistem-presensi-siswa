@@ -86,6 +86,10 @@ class KelasResource extends Resource
     {
         $query = parent::getEloquentQuery();
 
+        if (Auth::user()->role === 'admin') {
+            return $query; // Admin sees everything
+        }
+
         if (Auth::user()->role === 'wali_kelas') {
             return $query->where('wali_kelas_id', Auth::id());
         }
